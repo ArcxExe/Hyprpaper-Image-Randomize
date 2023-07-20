@@ -11,5 +11,5 @@ This simple script overwrites the hyprpaper config and restarts it
     - [ ] select them by keywords
 - [x] choose previous wallpaper
 - [ ] automatic config reading
-
+- [ ] rewrite script
 
