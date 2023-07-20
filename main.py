@@ -1,6 +1,7 @@
 import os
 import random
 import subprocess
+import sys
 
 path_wallpaper = "/home/arcx/wallpaper/"
 # path to wallpaper /home/{USER}/path/to/wallpaper
@@ -8,7 +9,7 @@ path_file = "/home/arcx/.config/hypr/hyprpaper.conf"
 # path to hyprpaper /home/{USER}/path/to/hyprpaper
 
 
-def wallpaper_next():
+def wallpaper_next(reverse=False):
     os.system("pkill hyprpaper")
 
     with open(path_file, "r") as f:
@@ -19,7 +20,10 @@ def wallpaper_next():
     if last_index_wallpaper == len(list_dir):
         last_index_wallpaper = 0
     else:
-        last_index_wallpaper += 1
+        if reverse:
+            last_index_wallpaper -= 1
+        else:
+            last_index_wallpaper += 1
 
     with open(path_file, "w") as f:
         f.write(f"preload = {path_wallpaper}{list_dir[last_index_wallpaper]} \nwallpaper = VGA-1,{path_wallpaper}{list_dir[last_index_wallpaper]}")
@@ -36,4 +40,17 @@ def wallpaper_random():
                      stdin=subprocess.PIPE)
 
 
-wallpaper_next()
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        wallpaper_next()
+    elif 'random' in sys.argv:
+        wallpaper_random()
+    elif 'true' in sys.argv:
+        wallpaper_next(True)
+    elif 'help' in sys.argv:
+        print("""
+random - wallpaper will be randomly selected from the folder
+true - wallpaper will be selected back
+no argument - wallpaper will be selected forward
+
+""")
