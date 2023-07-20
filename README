@@ -10,5 +10,6 @@ This simple script overwrites the hyprpaper config and restarts it
 - [ ] choose random photos from the internet
     - [ ] select them by keywords
 - [ ] choose previous wallpaper
+- [ ] automatic config reading
 
 
