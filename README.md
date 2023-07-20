@@ -9,7 +9,7 @@ This simple script overwrites the hyprpaper config and restarts it
 - [ ] Support for favorite wallpapers
 - [ ] choose random photos from the internet
     - [ ] select them by keywords
-- [ ] choose previous wallpaper
+- [x] choose previous wallpaper
 - [ ] automatic config reading
 
 
