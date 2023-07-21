@@ -29,13 +29,17 @@ def wallpaper_next(reverse=False):
 
     with open(path_file, "w") as f:
         f.write(f"preload = {path_wallpaper}{list_dir[last_index_wallpaper]} \nwallpaper = VGA-1,{path_wallpaper}{list_dir[last_index_wallpaper]}")
-    subprocess.Popen(["hyprpaper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    subprocess.Popen(["hyprpaper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, 
                      stdin=subprocess.PIPE)
 
 
 def wallpaper_random():
     os.system("pkill hyprpaper")
     random_file = random.choice([f for f in os.listdir(path_wallpaper)])
+    with open(path_file, "r") as f:
+        last_wallpaper = f.readline().strip().split("/")
+    while random_file == last_wallpaper[-1]:
+        random_file = random.choice([f for f in os.listdir(path_wallpaper)])
     with open(path_file, "w") as f:
         f.write(f"preload = {path_wallpaper}{random_file} \nwallpaper = VGA-1,{path_wallpaper}{random_file}")
     subprocess.Popen(["hyprpaper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
