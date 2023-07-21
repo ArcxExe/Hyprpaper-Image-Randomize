@@ -6,7 +6,6 @@ This simple script overwrites the hyprpaper config and restarts it
 
 - [ ] Change both every x minutes
     - [ ] stop timer
-- [ ] Support for favorite wallpapers
 - [ ] choose random photos from the internet
     - [ ] select them by keywords
 - [x] choose previous wallpaper
