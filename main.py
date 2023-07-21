@@ -18,8 +18,7 @@ def wallpaper_next(reverse=False):
     try:
         last_index_wallpaper = list_dir.index(last_wallpaper[-1])
     except ValueError:
-        last_index_wallpaper = random.randint(1, len(os.listdir(path_file)))
-
+        last_index_wallpaper = 0
     if last_index_wallpaper == len(list_dir):
         last_index_wallpaper = 0
     else:
