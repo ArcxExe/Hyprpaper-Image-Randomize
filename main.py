@@ -16,22 +16,25 @@ def write_config(file):
                      stdin=subprocess.PIPE)
 
 
-def wallpaper_next():
+def wallpaper_next(file=None):
     os.system("pkill hyprpaper")
-
-    with open(path_file, "r") as f:
-        last_wallpaper = f.readline().strip().split("/")
-    list_dir = [i for i in os.listdir(path_wallpaper)]
-    try:
-        last_index_wallpaper = list_dir.index(last_wallpaper[-1])
-    except ValueError:
-        last_index_wallpaper = 0
-    if last_index_wallpaper == len(list_dir):
-        last_index_wallpaper = 0
+    if file:
+        image = file.strip().split("/")
+        write_config(image[-1])
     else:
-        last_index_wallpaper += 1
-    file = list_dir[last_index_wallpaper]
-    write_config(file)
+        with open(path_file, "r") as f:
+            last_wallpaper = f.readline().strip().split("/")
+        list_dir = [i for i in os.listdir(path_wallpaper)]
+        try:
+            last_index_wallpaper = list_dir.index(last_wallpaper[-1])
+        except ValueError:
+            last_index_wallpaper = 0
+        if last_index_wallpaper == len(list_dir):
+            last_index_wallpaper = 0
+        else:
+            last_index_wallpaper += 1
+        file = list_dir[last_index_wallpaper]
+        write_config(file)
 
 
 def wallpaper_random():
@@ -54,6 +57,8 @@ def main():
         print("""
 random - wallpaper will be randomly selected from the folder
 """)
+    else:
+        wallpaper_next(sys.argv[1])
 
 
 if __name__ == "__main__":
