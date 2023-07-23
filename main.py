@@ -9,7 +9,14 @@ path_file = "/home/arcx/.config/hypr/hyprpaper.conf"
 # path to hyprpaper /home/{USER}/path/to/hyprpaper
 
 
-def wallpaper_next(reverse=False):
+def write_config(file):
+    with open(path_file, "w") as f:
+        f.write(f"preload = {path_wallpaper}{file} \nwallpaper = VGA-1,{path_wallpaper}{file}")
+    subprocess.Popen(["hyprpaper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, 
+                     stdin=subprocess.PIPE)
+
+
+def wallpaper_next():
     os.system("pkill hyprpaper")
 
     with open(path_file, "r") as f:
@@ -22,41 +29,32 @@ def wallpaper_next(reverse=False):
     if last_index_wallpaper == len(list_dir):
         last_index_wallpaper = 0
     else:
-        if reverse:
-            last_index_wallpaper -= 1
-        else:
-            last_index_wallpaper += 1
-
-    with open(path_file, "w") as f:
-        f.write(f"preload = {path_wallpaper}{list_dir[last_index_wallpaper]} \nwallpaper = VGA-1,{path_wallpaper}{list_dir[last_index_wallpaper]}")
-    subprocess.Popen(["hyprpaper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, 
-                     stdin=subprocess.PIPE)
+        last_index_wallpaper += 1
+    file = list_dir[last_index_wallpaper]
+    write_config(file)
 
 
 def wallpaper_random():
     os.system("pkill hyprpaper")
+
     random_file = random.choice([f for f in os.listdir(path_wallpaper)])
     with open(path_file, "r") as f:
         last_wallpaper = f.readline().strip().split("/")
     while random_file == last_wallpaper[-1]:
         random_file = random.choice([f for f in os.listdir(path_wallpaper)])
-    with open(path_file, "w") as f:
-        f.write(f"preload = {path_wallpaper}{random_file} \nwallpaper = VGA-1,{path_wallpaper}{random_file}")
-    subprocess.Popen(["hyprpaper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                     stdin=subprocess.PIPE)
+    write_config(random_file)
 
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) == 1:
         wallpaper_next()
     elif 'random' in sys.argv:
         wallpaper_random()
-    elif 'true' in sys.argv:
-        wallpaper_next(True)
     elif 'help' in sys.argv:
         print("""
 random - wallpaper will be randomly selected from the folder
-true - wallpaper will be selected back
-no argument - wallpaper will be selected forward
-
 """)
+
+
+if __name__ == "__main__":
+    main()
